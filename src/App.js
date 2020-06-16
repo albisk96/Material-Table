@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Table from './components/material-table';
+import ThemeContext, {themes} from './theme-context';
+import NavBar from './components/navbar';
 
 function App() {
+  const [theme, setTheme] = useState(themes.dark);
+  const toggleTheme = () => {
+    theme === themes.dark 
+      ? setTheme(themes.light)
+      : setTheme(themes.dark);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContext.Provider value={theme}>
+      <NavBar toggleTheme={toggleTheme} isDark={theme.background} />
+      <Table />
+    </ThemeContext.Provider>
   );
 }
 
